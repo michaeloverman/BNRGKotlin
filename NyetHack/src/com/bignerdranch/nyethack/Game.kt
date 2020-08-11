@@ -1,5 +1,6 @@
 package com.bignerdranch.nyethack
 
+import com.bignerdranch.nyethack.extensions.frame
 import java.lang.IllegalStateException
 import kotlin.system.exitProcess
 
@@ -21,7 +22,7 @@ object Game {
     )
 
     init {
-        println("Welcome, adventurer.")
+        println("Welcome, adventurer.".frame(5))
         player.castFireball()
     }
 

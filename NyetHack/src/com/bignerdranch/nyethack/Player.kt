@@ -1,5 +1,6 @@
 package com.bignerdranch.nyethack
 
+import com.bignerdranch.nyethack.extensions.random as randomizer
 import java.io.File
 
 class Player (_name: String,
@@ -59,6 +60,5 @@ class Player (_name: String,
     private fun selectHometown() = File("data/towns.txt")
             .readText()
             .split("\n")
-            .shuffled()
-            .first()
+            .randomizer()
 }
