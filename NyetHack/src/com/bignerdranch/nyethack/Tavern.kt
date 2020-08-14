@@ -1,5 +1,6 @@
 package com.bignerdranch.nyethack
 
+import com.bignerdranch.nyethack.extensions.random
 import java.io.File
 import java.util.*
 
@@ -27,8 +28,8 @@ fun main(args: Array<String>) {
     //    com.bignerdranch.nyethack.placeOrder(patron, com.bignerdranch.nyethack.getMenuList.shuffled().first())
     //}
     (0..9).forEach {
-        val first = firstList.shuffled().first()
-        val last = lastList.shuffled().first()
+        val first = firstList.random()
+        val last = lastList.random()
         val name = "$first $last"
         uniquePatrons += name
     }
@@ -39,7 +40,7 @@ fun main(args: Array<String>) {
 
     var orderCount = 0
     while (orderCount <= 9) {
-        placeOrder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
+        placeOrder(uniquePatrons.random(), menuList.random())
         orderCount++
     }
 
@@ -82,7 +83,7 @@ private fun placeOrder(patronName: String, menuData: String) {
     if (performPurchase(price.toDouble(), patronName)) {
 
         val phrase = if (name == "Dragon's Breath") {
-            "$patronName exclaims: ${toDragonSpeak("Ah, delicious $name! Your mother is a toad's wart's nit picker...")}"
+            "$patronName exclaims: ${"Ah, delicious $name! Your mother is a toad's wart's nit picker...".toDragonSpeak()}"
         } else {
             "$patronName says: Thanks for the $name"
         }
@@ -94,8 +95,8 @@ private fun placeOrder(patronName: String, menuData: String) {
 //    println('\u0954')
 }
 
-private fun toDragonSpeak(phrase: String) =
-    phrase.replace(Regex("[AEIOUaeiou]")) {
+private fun String.toDragonSpeak() =
+    this.replace(Regex("[AEIOUaeiou]")) {
         when (it.value) {
             "a" -> "4"
             "A" -> "4"
