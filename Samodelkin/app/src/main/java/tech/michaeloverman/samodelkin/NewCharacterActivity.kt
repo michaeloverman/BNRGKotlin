@@ -2,8 +2,6 @@ package tech.michaeloverman.samodelkin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_new_character.*
 
 private const val CHARACTER_DATA_KEY = "CHARACTER_DATA_KEY"
