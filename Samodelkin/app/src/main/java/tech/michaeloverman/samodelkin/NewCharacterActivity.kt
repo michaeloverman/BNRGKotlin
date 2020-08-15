@@ -2,7 +2,11 @@ package tech.michaeloverman.samodelkin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.MainThread
 import kotlinx.android.synthetic.main.activity_new_character.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 private const val CHARACTER_DATA_KEY = "CHARACTER_DATA_KEY"
 
@@ -26,11 +30,17 @@ class NewCharacterActivity : AppCompatActivity() {
 //        characterData = savedInstanceState?.let {
 //            it.getSerializable(CHARACTER_DATA_KEY) as CharacterGenerator.CharacterData
 //        } ?: CharacterGenerator.generate()
-        characterData = savedInstanceState?.characterData ?: CharacterGenerator.generate()
+        characterData = savedInstanceState?.characterData ?: runBlocking { fetchCharacterData().await() }
 
         generateButton.setOnClickListener {
-            characterData = CharacterGenerator.generate()
-            displayCharacterData()
+//            characterData = CharacterGenerator.generate()
+            runBlocking {
+                characterData = fetchCharacterData().await()
+                while (characterData.str.toInt() < 10) {
+                    characterData = fetchCharacterData().await()
+                }
+                displayCharacterData()
+            }
         }
 
         displayCharacterData()
