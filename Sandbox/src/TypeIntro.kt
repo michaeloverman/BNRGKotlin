@@ -1,12 +1,9 @@
-const val MAX_EXPERIENCE: Int = 5000
+const val MAX_EXPERIENCE = 5000
 
-fun main(args: Array<String>) {
+fun main() {
     val playerName = "Estragon"
+//    playerName = "Madrigal"
     var experiencePoints = 5
-    var hasSteed = false
-    var playersGold = 50
-    val pubName = "Unicorn's Horn"
-    val publicanName: String
     experiencePoints += 5
     println(experiencePoints)
     println(playerName)
