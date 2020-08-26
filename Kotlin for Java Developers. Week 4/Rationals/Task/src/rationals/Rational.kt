@@ -3,38 +3,57 @@ package rationals
 import java.math.BigInteger
 
 
-class Rational(var n: BigInteger, var d: BigInteger) : Comparable<Rational> {
+class Rational(_n: BigInteger, _d: BigInteger) : Comparable<Rational> {
+    val n: BigInteger
+    val d: BigInteger
     init {
-        require(d != BigInteger.ZERO) { "Denominator cannot be zero." }
+        require(_d != BigInteger.ZERO) { "Denominator cannot be zero." }
 
         // If denominator is negative, swap both
-        if (d < BigInteger.ZERO) {
-            n = -n
-            d = -d
-        }
+//        if (d < BigInteger.ZERO) {
+//            n = -n
+//            d = -d
+//        } // From explanation video...
+        val s = _d.signum().toBigInteger()
 
         // Reduce the fraction
-        val gcd = n.gcd(d)
-        if (gcd != BigInteger.ONE) {
-            n /= gcd
-            d /= gcd
-        }
-
+        val gcd = _n.gcd(_d)
+        n = _n / gcd * s
+        d = _d / gcd * s
     }
 
     override fun toString() = if (d == BigInteger.ONE) "$n"
         else "$n/$d"
 
     override operator fun compareTo(other: Rational) =
-        if (d == other.d) n.compareTo(other.n)
-        else (n * other.d).compareTo(other.n * d)
+//        if (d == other.d) n.compareTo(other.n)
+        (n * other.d).compareTo(other.n * d)
 
-    override fun equals(other: Any?) =
-        if (other == null) false
-        else {
-            val o = other as Rational
-            n == o.n && d == o.d
-        }
+    // Auto-generated equals and hashCode methods:
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Rational
+
+        if (n != other.n) return false
+        if (d != other.d) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = n.hashCode()
+        result = 31 * result + d.hashCode()
+        return result
+    }
+
+//    override fun equals(other: Any?) =
+//        if (other == null) false
+//        else {
+//            val o = other as Rational
+//            n == o.n && d == o.d
+//        }
 }
 
 operator fun Rational.plus(other: Rational): Rational =
